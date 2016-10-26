@@ -17,6 +17,7 @@ class LoadCustomerData implements FixtureInterface
 		$sensor->setEnable(true);
 
 		$user1 = new Customer();
+		$user1->setUsername("mirouf");
 		$user1->setPassword("password");
 		$user1->setEmail("mirouf@mail.com");
 		$user1->setSensor($sensor);

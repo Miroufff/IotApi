@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use AppBundle\Entity\Sensor;
 
 /**
@@ -11,7 +12,7 @@ use AppBundle\Entity\Sensor;
  * @ORM\Table(name="customer")
  * @ORM\Entity
  */
-class Customer
+class Customer extends BaseUser
 {
     /**
      * @var integer
@@ -20,7 +21,7 @@ class Customer
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -46,20 +47,6 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=512, nullable=true)
-     */
-    private $username;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=512, nullable=false)
-     */
-    private $password;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="credentials", type="text", length=65535, nullable=true)
      */
     private $credentials;
@@ -70,13 +57,6 @@ class Customer
      * @ORM\Column(name="challenges", type="text", length=65535, nullable=true)
      */
     private $challenges;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=512, nullable=false)
-     */
-    private $email;
 
     /**
      * @var boolean
@@ -120,7 +100,10 @@ class Customer
       */
     private $sensor;
 
-
+    public function __construct()
+    {
+	    parent::__construct();
+    }
 
     /**
      * Get id
