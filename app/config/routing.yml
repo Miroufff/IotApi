@@ -8,6 +8,7 @@ app_sensor_api:
     type:   rest
     prefix:   /api
 
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

@@ -102,5 +102,18 @@ sensio_framework_extra:
     view:    { annotations: false }
     router:  { annotations: true }
 
-nelmio_api_doc: ~
+nelmio_api_doc:
+    name:                 'App API documentation'
+    sandbox:
+        body_format:
+           formats: [form, json, xml]
+           default_format: json
 
+influx_db:
+    host:                 "127.0.0.1"
+    database:             "cloud_log" 
+    # udp:                  false
+    # udp_port:             4444
+    http_port:            8086
+    # username: ''
+    # password: ''
