@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9fd87938a7139b042a54c869264b71c3",
-    "content-hash": "feebb05bc2288d5230898e3211f595ad",
+    "hash": "967377e6ef94ae12bd50ca006191539e",
+    "content-hash": "9fa3da272691ef07f9202b7e0bcef4f3",
     "packages": [
         {
             "name": "algatux/influxdb-bundle",

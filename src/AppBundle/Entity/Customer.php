@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Sensor;
 
 /**
  * Customer
@@ -112,12 +113,12 @@ class Customer
      */
     private $lastupdated;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id_sensor", type="integer", nullable=true)
-     */
-    private $idSensor;
+     /**
+      * @var Sensor
+      *
+      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Sensor", cascade={"persist"})
+      */
+    private $sensor;
 
 
 
@@ -431,25 +432,25 @@ class Customer
     }
 
     /**
-     * Set idSensor
+     * Set Sensor
      *
-     * @param integer $idSensor
+     * @param Sensor $sensor
      * @return Customer
      */
-    public function setIdSensor($idSensor)
+    public function setSensor($sensor)
     {
-        $this->idSensor = $idSensor;
+        $this->sensor = $sensor;
 
         return $this;
     }
 
     /**
-     * Get idSensor
+     * Get Sensor
      *
-     * @return integer 
+     * @return Sensor 
      */
-    public function getIdSensor()
+    public function getSensor()
     {
-        return $this->idSensor;
+        return $this->sensor;
     }
 }

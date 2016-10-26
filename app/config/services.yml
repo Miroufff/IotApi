@@ -7,3 +7,14 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+     influxdb_client:
+         class: InfluxDB\Client
+         arguments: ['%influxdb_host%', '%influxdb_port%']
+     influxdb_database:
+         class: InfluxDB\Database
+         arguments: ['%influxdb_db%', '@influxdb_client']
+     security.authentication.monitoring:
+         class: AppBundle\Listener\MonitorAuthenticationListener
+         arguments: ['@influxdb_database']
+         tags:
+             - { name: kernel.event_listener, event: security.authentication.failure, method: onFailure }
