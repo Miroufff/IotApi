@@ -1,0 +1,60 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Sensor
+ *
+ * @ORM\Table(name="sensor")
+ * @ORM\Entity
+ */
+class Sensor
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="displayName", type="string", length=512, nullable=false)
+     */
+    private $displayname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vendor", type="string", length=512, nullable=true)
+     */
+    private $vendor;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="product", type="integer", nullable=true)
+     */
+    private $product;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="version", type="integer", nullable=false)
+     */
+    private $version;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enable", type="boolean", nullable=false)
+     */
+    private $enable;
+
+
+}

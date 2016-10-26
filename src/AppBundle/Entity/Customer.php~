@@ -1,0 +1,123 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Customer
+ *
+ * @ORM\Table(name="customer")
+ * @ORM\Entity
+ */
+class Customer
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="firstName", type="string", length=512, nullable=true)
+     */
+    private $firstname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastName", type="string", length=512, nullable=true)
+     */
+    private $lastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="realm", type="string", length=512, nullable=true)
+     */
+    private $realm;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=512, nullable=true)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=512, nullable=false)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="credentials", type="text", length=65535, nullable=true)
+     */
+    private $credentials;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="challenges", type="text", length=65535, nullable=true)
+     */
+    private $challenges;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=512, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="emailVerified", type="boolean", nullable=true)
+     */
+    private $emailverified;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="verificationToken", type="string", length=512, nullable=true)
+     */
+    private $verificationtoken;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=512, nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime", nullable=true)
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="lastUpdated", type="datetime", nullable=true)
+     */
+    private $lastupdated;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_sensor", type="integer", nullable=true)
+     */
+    private $idSensor;
+
+
+}

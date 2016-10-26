@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Customer</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ customer.id }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ customer.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ customer.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Realm</th>
+                <td>{{ customer.realm }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ customer.username }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ customer.password }}</td>
+            </tr>
+            <tr>
+                <th>Credentials</th>
+                <td>{{ customer.credentials }}</td>
+            </tr>
+            <tr>
+                <th>Challenges</th>
+                <td>{{ customer.challenges }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ customer.email }}</td>
+            </tr>
+            <tr>
+                <th>Emailverified</th>
+                <td>{% if customer.emailverified %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Verificationtoken</th>
+                <td>{{ customer.verificationtoken }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ customer.status }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if customer.created %}{{ customer.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lastupdated</th>
+                <td>{% if customer.lastupdated %}{{ customer.lastupdated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Idsensor</th>
+                <td>{{ customer.idSensor }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('customer_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('customer_edit', { 'id': customer.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

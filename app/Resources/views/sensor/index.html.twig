@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Sensor list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Displayname</th>
+                <th>Vendor</th>
+                <th>Product</th>
+                <th>Version</th>
+                <th>Enable</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sensor in sensors %}
+            <tr>
+                <td><a href="{{ path('sensor_show', { 'id': sensor.id }) }}">{{ sensor.id }}</a></td>
+                <td>{{ sensor.displayname }}</td>
+                <td>{{ sensor.vendor }}</td>
+                <td>{{ sensor.product }}</td>
+                <td>{{ sensor.version }}</td>
+                <td>{% if sensor.enable %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('sensor_show', { 'id': sensor.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('sensor_edit', { 'id': sensor.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('sensor_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,16 @@
+app_customer_api:
+    resource: "@AppBundle/Controller/CustomerRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app_sensor_api:
+    resource: "@AppBundle/Controller/SensorRESTController.php"
+    type:   rest
+    prefix:   /api
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
