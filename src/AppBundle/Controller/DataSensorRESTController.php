@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 
 /**
@@ -73,7 +72,7 @@ class DataSensorRESTController extends VoryxController
             0.64, // the measurement value
             ['host' => 'server01', 'region' => 'italy'], // optional tags
             ['cpucount' => rand(1,100), 'memory' => memory_get_usage(true)], // optional additional fields
-            $time
+            $time->getTimestamp()
         )]);
 
         return "bonjour";
