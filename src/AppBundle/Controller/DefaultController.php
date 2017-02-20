@@ -20,7 +20,7 @@ class DefaultController extends Controller
             0.64, // the measurement value
             ['host' => 'server01', 'region' => 'italy'], // optional tags
             ['cpucount' => rand(1,100), 'memory' => memory_get_usage(true)], // optional additional fields
-            $time->getTimestamp()
+            $time
         )]);
 
 

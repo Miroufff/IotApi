@@ -72,7 +72,7 @@ class DataSensorRESTController extends VoryxController
             'test_metric', // name of the measurement
             0.64, // the measurement value
             ['cpucount' => rand(1,100), 'memory' => memory_get_usage(true)], // optional additional fields
-            $time->getTimestamp()
+            $time
         )]);
 
         return "bonjour";
