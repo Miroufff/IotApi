@@ -70,6 +70,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: AppBundle\Entity\Customer
+    from_email:
+        address:        sylvain.davenel@laposte.net
+        sender_name:    CloudApi
 
 fos_rest:
     routing_loader:
@@ -111,7 +114,7 @@ nelmio_api_doc:
 
 influx_db:
     host:                 "127.0.0.1"
-    database:             "cloud_log" 
+    database:             "raspberrypi" 
     # udp:                  false
     # udp_port:             4444
     http_port:            8086
