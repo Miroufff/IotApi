@@ -1,0 +1,7 @@
+app_customer_api:
+    resource: "@AppBundle/Controller/CustomerRESTController.php"
+    type:   rest
+
+app_sensor_api:
+    resource: "@AppBundle/Controller/SensorRESTController.php"
+    type:   rest
