@@ -75,7 +75,7 @@ fos_user:
         sender_name:    CloudApi
 
 fos_rest:
-    aram_fetcher_listener: true
+    param_fetcher_listener: true
     body_listener: true
     format_listener: true
     view:
