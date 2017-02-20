@@ -30,12 +30,19 @@ class DataSensorRESTController extends VoryxController
      *
      * @View(serializerEnableMaxDepthChecks=true)
      *
+     * @param $idSensor
+     *
      * @return Response
      *
      */
-    public function getAction(DataSensor $entity)
+    public function getAction($idSensor)
     {
-        return $entity;
+        return $this->get("influxdb_database")->getQueryBuilder()
+        ->select('*')
+        ->from('test_metric')
+        ->where(["cpucount = '".$idSensor."'"])
+        ->getResultSet()
+        ->getPoints();;
     }
     /**
      * Get all DataSensor entities.
@@ -67,6 +74,8 @@ class DataSensorRESTController extends VoryxController
             ['cpucount' => rand(1,100), 'memory' => memory_get_usage(true)], // optional additional fields
             $time->getTimestamp()
         )]);
+
+        return "bonjour";
     }
     /**
      * Update a DataSensor entity.
