@@ -42,33 +42,11 @@ class DataSensorRESTController extends VoryxController
      *
      * @View(serializerEnableMaxDepthChecks=true)
      *
-     * @param ParamFetcherInterface $paramFetcher
-     *
      * @return Response
-     *
-     * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing notes.")
-     * @QueryParam(name="limit", requirements="\d+", default="20", description="How many notes to return.")
-     * @QueryParam(name="order_by", nullable=true, array=true, description="Order by fields. Must be an array ie. &order_by[name]=ASC&order_by[description]=DESC")
-     * @QueryParam(name="filters", nullable=true, array=true, description="Filter by fields. Must be an array ie. &filters[id]=3")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher)
+    public function cgetAction()
     {
-        try {
-            $offset = $paramFetcher->get('offset');
-            $limit = $paramFetcher->get('limit');
-            $order_by = $paramFetcher->get('order_by');
-            $filters = !is_null($paramFetcher->get('filters')) ? $paramFetcher->get('filters') : array();
-
-            $em = $this->getDoctrine()->getManager();
-            $entities = $em->getRepository('AppBundle:DataSensor')->findBy($filters, $order_by, $limit, $offset);
-            if ($entities) {
-                return $entities;
-            }
-
-            return FOSView::create('Not Found', Codes::HTTP_NO_CONTENT);
-        } catch (\Exception $e) {
-            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        return $this->get("influxdb_database")->query('select * from test_metric LIMIT 5')->getPoints();;
     }
     /**
      * Create a DataSensor entity.
@@ -88,7 +66,7 @@ class DataSensorRESTController extends VoryxController
             0.64, // the measurement value
             ['cpucount' => rand(1,100), 'memory' => memory_get_usage(true)], // optional additional fields
             $time->getTimestamp()
-        )]);    
+        )]);
     }
     /**
      * Update a DataSensor entity.
