@@ -28,7 +28,8 @@
         "voryx/restgeneratorbundle": "dev-master",
         "nelmio/api-doc-bundle": "^2.13",
         "algatux/influxdb-bundle": "^2.1",
-        "influxdb/influxdb-php": "^1.14"
+        "influxdb/influxdb-php": "^1.14",
+        "yproximite/influxdb-preset-bundle": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

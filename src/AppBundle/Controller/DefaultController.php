@@ -14,10 +14,16 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-    	$result = $this->get("influxdb_database")->writePoints([new Point(
-	    'page_view',  // name of the measurement
-	    1             // the measurement value
-    	)]);
+        $time = new \DateTime();
+	$points = $this->get("influxdb_database")->writePoints([new Point(
+	   'test_metric', // name of the measurement
+	    0.64, // the measurement value
+	    ['host' => 'server01', 'region' => 'italy'], // optional tags
+	    ['cpucount' => rand(1,100), 'memory' => memory_get_usage(true)], // optional additional fields
+	    $time->getTimestamp()
+	)]);
+
+
 
 	// replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
