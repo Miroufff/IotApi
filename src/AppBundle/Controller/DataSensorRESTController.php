@@ -71,6 +71,7 @@ class DataSensorRESTController extends VoryxController
         $points = $this->get("influxdb_database")->writePoints([new Point(
             'test_metric', // name of the measurement
             0.64, // the measurement value
+            ['host' => 'server01', 'region' => 'italy'], // optional tags
             ['cpucount' => rand(1,100), 'memory' => memory_get_usage(true)], // optional additional fields
             $time
         )]);
