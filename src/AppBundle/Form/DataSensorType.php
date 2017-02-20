@@ -13,7 +13,7 @@ class DataSensorType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('receivedAt')->add('value')->add('sensor')        ;
+        $builder->add('receivedAt')->add('value')->add('sensor');
     }
     
     /**
