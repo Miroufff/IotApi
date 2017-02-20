@@ -56,7 +56,10 @@ class Sensor
      */
     private $enable;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\DataSensor", mappedBy="sensor")
+     */
+    private $dataSensors;
 
     /**
      * Get id

@@ -36,9 +36,10 @@ class DataSensor
     private $value;
 
     /**
-     * @var \stdClass
+     * Client à qui on assigne la fea
      *
-     * @ORM\Column(name="sensor", type="object")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sensor", inversedBy="dataSensors")
+     * @ORM\JoinColumn(name="sensor_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $sensor;
 
