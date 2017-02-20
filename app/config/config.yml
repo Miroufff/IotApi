@@ -72,15 +72,22 @@ fos_user:
     user_class: AppBundle\Entity\Customer
 
 fos_rest:
+    aram_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml: true
+            json : true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
     routing_loader:
         default_format: json
-    param_fetcher_listener: true
-    body_listener: true
-    #disable_csrf_role: ROLE_USER
-    body_converter:
-        enabled: true
-    view:
-        view_response_listener: force
 
 nelmio_cors:
     defaults:
