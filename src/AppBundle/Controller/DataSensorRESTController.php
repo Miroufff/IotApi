@@ -82,20 +82,13 @@ class DataSensorRESTController extends VoryxController
      */
     public function postAction(Request $request)
     {
-        $entity = new DataSensor();
-        $form = $this->createForm(get_class(new DataSensorType()), $entity, array("method" => $request->getMethod()));
-        $this->removeExtraFields($request, $form);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $entity;
-        }
-
-        return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
+        $time = new \DateTime();
+        $points = $this->get("influxdb_database")->writePoints([new Point(
+            'test_metric', // name of the measurement
+            0.64, // the measurement value
+            ['cpucount' => rand(1,100), 'memory' => memory_get_usage(true)], // optional additional fields
+            $time->getTimestamp()
+        )]);    
     }
     /**
      * Update a DataSensor entity.

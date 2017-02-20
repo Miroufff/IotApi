@@ -1,3 +1,11 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
 app_data_sensor_api:
     resource: "@AppBundle/Controller/DataSensorRESTController.php"
     type:   rest
@@ -9,9 +17,3 @@ rest :
   resource : "routing_rest.yml"
   prefix : /api
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
-NelmioApiDocBundle:
-    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc

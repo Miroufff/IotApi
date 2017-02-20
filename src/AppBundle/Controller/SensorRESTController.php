@@ -26,12 +26,22 @@ use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 class SensorRESTController extends VoryxController
 {
     /**
-     * Get a Sensor entity
+     * REST action which returns type by id.
+     * Method: GET, url: /api/sensors/{entity}.{_format}
      *
-     * @View(serializerEnableMaxDepthChecks=true)
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Gets a Sensor for a given id",
+     *   output = "AppBundle\Entity\SensorType",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
      *
-     * @return Response
+     * @param $entity
      *
+     * @return mixed
      */
     public function getAction(Sensor $entity)
     {
