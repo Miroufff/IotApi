@@ -13,7 +13,10 @@ app_data_sensor_api:
 
 #REST
 rest :
-  type : rest
-  resource : "routing_rest.yml"
-  prefix : /api
+    type : rest
+    resource : "routing_rest.yml"
+    prefix : /api
 
+admin_area:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    prefix: /admin

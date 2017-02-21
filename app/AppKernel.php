@@ -24,7 +24,12 @@ class AppKernel extends Kernel
 	    new Nelmio\CorsBundle\NelmioCorsBundle(),
 	    new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
 	    new Algatux\InfluxDbBundle\InfluxDbBundle(),
-    	);
+            new Sonata\CoreBundle\SonataCoreBundle(),
+	    new Sonata\BlockBundle\SonataBlockBundle(),
+	    new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+	    new Sonata\AdminBundle\SonataAdminBundle(),
+        );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();

@@ -29,10 +29,12 @@
         "nelmio/api-doc-bundle": "^2.13",
         "algatux/influxdb-bundle": "^2.1",
         "influxdb/influxdb-php": "^1.14",
-        "yproximite/influxdb-preset-bundle": "^1.0"
+        "yproximite/influxdb-preset-bundle": "^1.0",
+        "sonata-project/admin-bundle": "^3.13",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.1"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0",
+        "sensio/generator-bundle": "3.x",
         "symfony/phpunit-bridge": "~2.7"
     },
     "scripts": {
