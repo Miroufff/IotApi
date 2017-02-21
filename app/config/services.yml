@@ -18,3 +18,9 @@ services:
          arguments: ['@influxdb_database']
          tags:
              - { name: kernel.event_listener, event: security.authentication.failure, method: onFailure }
+     services:
+         admin.category:
+             class: AppBundle\Admin\CategoryAdmin
+             arguments: [~, AppBundle\Entity\Category, ~]
+             tags:
+                 - { name: sonata.admin, manager_type: orm, label: Category }
