@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use DateTime;
 
 /**
  * DataSensor controller.
@@ -67,29 +68,19 @@ class DataSensorRESTController extends VoryxController
      */
     public function postAction(Request $request)
     {
-        $entity = new DataSensor();
-        $form = $this->createForm(get_class(new DataSensorType()), $entity, array("method" => $request->getMethod()));
-        $this->removeExtraFields($request, $form);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+	$sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("displayname" => $request->request->get('sensor', '')));
+	$time = new DateTime();
+dump($request->request->get('receivedAt'));
+        $points = $this->get("influxdb_database")->writePoints([new Point(
+                'temperature', // name of the measurement
+                $request->request->get('value', 0),// the measurement value
+                ['sensor' => $sensor->getId()], // optional additional fields
+		[],
+		$request->request->get('receivedAt', exec('date +%s%N'))
+        )]);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            $time = new \DateTime();
-            $points = $this->get("influxdb_database")->writePoints([new Point(
-                'test_metric', // name of the measurement
-                0.64, // the measurement value
-                ['host' => 'server01', 'region' => 'italy'], // optional tags
-                ['cpucount' => rand(1,100), 'memory' => memory_get_usage(true)], // optional additional fields
-                $time->getTimestamp()
-            )]);
-
-            return new JsonResponse($entity);
-        }
-
-        return 'error';
+        return new JsonResponse($sensor);
     }
     /**
      * Update a DataSensor entity.

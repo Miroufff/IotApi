@@ -22,13 +22,6 @@ class DataSensor
     private $id;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="receivedAt", type="datetime")
-     */
-    private $receivedAt;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=255)
@@ -52,30 +45,6 @@ class DataSensor
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set receivedAt
-     *
-     * @param \DateTime $receivedAt
-     *
-     * @return DataSensor
-     */
-    public function setReceivedAt($receivedAt)
-    {
-        $this->receivedAt = $receivedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get receivedAt
-     *
-     * @return \DateTime
-     */
-    public function getReceivedAt()
-    {
-        return $this->receivedAt;
     }
 
     /**
