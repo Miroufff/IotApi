@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Sensor controller.
@@ -85,6 +86,12 @@ class SensorRESTController extends VoryxController
     /**
      * Create a Sensor entity.
      *
+     * @ApiDoc(
+     *  description="Create a new Object",
+     *  input="AppBundle\Form\SensorType",
+     *  output="AppBundle\Entity\Sensor"
+     * )
+     * 
      * @View(statusCode=201, serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
@@ -95,16 +102,39 @@ class SensorRESTController extends VoryxController
     public function postAction(Request $request)
     {
         $entity = new Sensor();
-        $form = $this->createForm(get_class(new SensorType()), $entity, array("method" => $request->getMethod()));
+	$form = $this->createForm('AppBundle\Form\SensorType', $entity);
         $this->removeExtraFields($request, $form);
-        $form->handleRequest($request);
+	$form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+	    
+	    $uuid = \Ramsey\Uuid\Uuid::uuid4();
+	    $entity->setUuid($uuid->toString());
 
-            return $entity;
+	    $name = $em->createQueryBuilder()
+	        ->select('s')
+		->from('AppBundle:Sensor', 's')
+		->andWhere('s.displayname = :displayname')
+		->setParameter('displayname', $entity->getDisplayname())
+		->orderBy('s.id', 'DESC')
+		->setMaxResults(1)
+		->getQuery()
+	        ->getOneOrNullResult();
+
+	    if ($name) {
+	    	$entity->setDisplayname(++$name[0]['displayname']);
+	    } else {
+	    	$entity->setDisplayname($entity->getDisplayname().".1");
+	    }
+
+	    $em->persist($entity);
+	    $em->flush();
+
+dump($name);
+dump(new JsonResponse($entity));
+
+            return new JsonResponse($entity);
         }
 
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);

@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * Sensor
@@ -24,9 +26,16 @@ class Sensor
     /**
      * @var string
      *
-     * @ORM\Column(name="displayName", type="string", length=512, nullable=false)
+     * @ORM\Column(name="displayName", type="string", length=2048)
      */
     private $displayname;
+  
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="uuid", type="string", length=2048)
+     */
+    private $uuid;
 
     /**
      * @var string
@@ -36,9 +45,9 @@ class Sensor
     private $vendor;
 
     /**
-     * @var integer
+     * @var string 
      *
-     * @ORM\Column(name="product", type="integer", nullable=true)
+     * @ORM\Column(name="product", type="string", nullable=true)
      */
     private $product;
 
@@ -92,6 +101,30 @@ class Sensor
     public function getDisplayname()
     {
         return $this->displayname;
+    }
+    
+    /**
+     * Set uuid
+     *
+     * @param string $uuid
+     *
+     * @return Sensor
+     */
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * Get uuid
+     *
+     * @return string 
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 
     /**

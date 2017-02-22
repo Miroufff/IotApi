@@ -13,7 +13,7 @@ class SensorType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('displayname')->add('vendor')->add('product')->add('version')->add('enable')        ;
+        $builder->add('displayname')->add('vendor')->add('product')->add('version')->add('enable');
     }
     
     /**
