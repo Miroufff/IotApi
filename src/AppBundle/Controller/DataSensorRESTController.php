@@ -40,8 +40,8 @@ class DataSensorRESTController extends VoryxController
     {
         return $this->get("influxdb_database")->getQueryBuilder()
         ->select('*')
-        ->from('test_metric')
-        ->where(["cpucount = '".$idSensor."'"])
+        ->from('temperature')
+        ->where(["sensor = '".$idSensor."'"])
         ->getResultSet()
         ->getPoints();;
     }
@@ -71,7 +71,7 @@ class DataSensorRESTController extends VoryxController
     public function postAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-	$sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("displayname" => $request->request->get('sensor', '')));
+	$sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("uuid" => $request->request->get('sensor', '')));
 
 	if ($sensor) {
 		$points = $this->get("influxdb_database")->writePoints([new Point(

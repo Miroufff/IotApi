@@ -129,20 +129,27 @@ class SensorRESTController extends VoryxController
 		$newName = $name->getDisplayname();
 	    	$entity->setDisplayname(++$newName);
 	    } else {
-	    	$entity->setDisplayname($entity->getDisplayname().".1");
+	    	$entity->setDisplayname($entity->getDisplayname().".00001");
 	    }
+
+	    $entity->setEnable(true);
 
 	    $em->persist($entity);
 	    $em->flush();
 
-	    $encoders = array(new XmlEncoder(), new JsonEncoder());
-	    $normalizers = array(new ObjectNormalizer());
+	    $sensor = $em->createQueryBuilder()
+	        ->select('s')
+		->from('AppBundle:Sensor', 's')
+		->where('s.id like :id')
+		->setParameter('id', $entity->getId())
+		->getQuery()
+		->getArrayResult();
 
-	    $serializer = new Serializer($normalizers, $encoders);
+	    $response = new Response(json_encode($sensor[0]));
+	    $response->headers->set('Content-Type', 'application/json');
 
-	    $jsonContent = $serializer->serialize($entity, 'json');
+	    return $response;
 
-            return $jsonContent;
         }
 
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
