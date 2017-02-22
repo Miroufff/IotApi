@@ -61,7 +61,7 @@ class Sensor
     /**
      * @var boolean
      *
-     * @ORM\Column(name="enable", type="boolean", nullable=false)
+     * @ORM\Column(name="enable", type="boolean", nullable=false, options={"default"=true})
      */
     private $enable;
 
@@ -69,6 +69,13 @@ class Sensor
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\DataSensor", mappedBy="sensor")
      */
     private $dataSensors;
+
+    /**
+     * Constructor
+     */ 
+    public function __construct() {
+	$this->enable = true;
+    }
 
     /**
      * Get id

@@ -4,7 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Sensor;
 use AppBundle\Form\SensorType;
-
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
@@ -115,15 +118,16 @@ class SensorRESTController extends VoryxController
 	    $name = $em->createQueryBuilder()
 	        ->select('s')
 		->from('AppBundle:Sensor', 's')
-		->andWhere('s.displayname = :displayname')
-		->setParameter('displayname', $entity->getDisplayname())
-		->orderBy('s.id', 'DESC')
+		->where('s.displayname like :displayname')
+		->setParameter('displayname', $entity->getDisplayname().'%')
+	        ->orderBy('s.id', 'DESC')
 		->setMaxResults(1)
 		->getQuery()
-	        ->getOneOrNullResult();
+		->getOneOrNullResult();
 
 	    if ($name) {
-	    	$entity->setDisplayname(++$name[0]['displayname']);
+		$newName = $name->getDisplayname();
+	    	$entity->setDisplayname(++$newName);
 	    } else {
 	    	$entity->setDisplayname($entity->getDisplayname().".1");
 	    }
@@ -131,10 +135,14 @@ class SensorRESTController extends VoryxController
 	    $em->persist($entity);
 	    $em->flush();
 
-dump($name);
-dump(new JsonResponse($entity));
+	    $encoders = array(new XmlEncoder(), new JsonEncoder());
+	    $normalizers = array(new ObjectNormalizer());
 
-            return new JsonResponse($entity);
+	    $serializer = new Serializer($normalizers, $encoders);
+
+	    $jsonContent = $serializer->serialize($entity, 'json');
+
+            return $jsonContent;
         }
 
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
