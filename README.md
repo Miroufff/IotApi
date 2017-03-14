@@ -3,6 +3,13 @@ IotApi
 
 A Symfony project created on October 26, 2016, 9:21 am.
 
+## Description
+
+* Manage sensors with MySql
+* Manage sensor's data with InfluxDB
+* Store your sensor's data via Symfony API
+* Get your data via Symfony API
+
 ## Features
 
 * PHP 7.0
@@ -28,6 +35,11 @@ php app/console server:start 0.0.0.0:8000
 ```  
 
 ## Usage
+
+Sensor management
+```bash
+0.0.0.0:8000/admin
+```  
 
 Api Documentation
 ```bash
