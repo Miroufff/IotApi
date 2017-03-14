@@ -70,7 +70,7 @@ class DataSensorRESTController extends VoryxController
      */
     public function postAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+	$em = $this->getDoctrine()->getManager();
 	$sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("uuid" => $request->request->get('sensor', '')));
 
 	if ($sensor) {
