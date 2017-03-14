@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use DateTime;
 
 /**
@@ -83,6 +84,8 @@ class DataSensorRESTController extends VoryxController
     {
 	$em = $this->getDoctrine()->getManager();
 	$sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("uuid" => $request->request->get('sensor', '')));
+
+//TODO : check if the uuid received is ok
 
 	if ($sensor) {
 		$points = $this->get("influxdb_database")->writePoints([new Point(
