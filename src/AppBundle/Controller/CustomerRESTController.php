@@ -37,6 +37,7 @@ class CustomerRESTController extends VoryxController
     {
         return $entity;
     }
+
     /**
      * Get all Customer entities.
      *
@@ -70,6 +71,7 @@ class CustomerRESTController extends VoryxController
             return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
     /**
      * Create a Customer entity.
      *
@@ -97,6 +99,7 @@ class CustomerRESTController extends VoryxController
 
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
     }
+
     /**
      * Update a Customer entity.
      *
@@ -126,6 +129,7 @@ class CustomerRESTController extends VoryxController
             return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
     /**
      * Partial Update to a Customer entity.
      *
@@ -140,6 +144,7 @@ class CustomerRESTController extends VoryxController
     {
         return $this->putAction($request, $entity);
     }
+
     /**
      * Delete a Customer entity.
      *

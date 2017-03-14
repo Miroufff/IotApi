@@ -57,9 +57,20 @@ class DataSensorRESTController extends VoryxController
     {
         return $this->get("influxdb_database")->query('select * from test_metric LIMIT 5')->getPoints();;
     }
-    
+
     /**
-     * Create a DataSensor entity.
+     * REST action which returns type by id.
+     * Method: GET, url: /api/datasensor/{request}.{_format}
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Push a sensor data",
+     *   output = "AppBundle\Entity\DataSensorType",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
      *
      * @View(statusCode=201, serializerEnableMaxDepthChecks=true)
      *

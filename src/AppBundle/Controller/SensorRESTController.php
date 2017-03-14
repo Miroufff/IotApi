@@ -105,51 +105,49 @@ class SensorRESTController extends VoryxController
     public function postAction(Request $request)
     {
         $entity = new Sensor();
-	$form = $this->createForm('AppBundle\Form\SensorType', $entity);
+	    $form = $this->createForm('AppBundle\Form\SensorType', $entity);
         $this->removeExtraFields($request, $form);
-	$form->handleRequest($request);
+	    $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-	    
-	    $uuid = \Ramsey\Uuid\Uuid::uuid4();
-	    $entity->setUuid($uuid->toString());
+            $uuid = \Ramsey\Uuid\Uuid::uuid4();
+            $entity->setUuid($uuid->toString());
 
-	    $name = $em->createQueryBuilder()
-	        ->select('s')
-		->from('AppBundle:Sensor', 's')
-		->where('s.displayname like :displayname')
-		->setParameter('displayname', $entity->getDisplayname().'%')
-	        ->orderBy('s.id', 'DESC')
-		->setMaxResults(1)
-		->getQuery()
-		->getOneOrNullResult();
+            $name = $em->createQueryBuilder()
+                ->select('s')
+                ->from('AppBundle:Sensor', 's')
+                ->where('s.displayname like :displayname')
+                ->setParameter('displayname', $entity->getDisplayname().'%')
+                ->orderBy('s.id', 'DESC')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
 
-	    if ($name) {
-		$newName = $name->getDisplayname();
-	    	$entity->setDisplayname(++$newName);
-	    } else {
-	    	$entity->setDisplayname($entity->getDisplayname().".00001");
-	    }
+            if ($name) {
+                $newName = $name->getDisplayname();
+                $entity->setDisplayname(++$newName);
+            } else {
+                $entity->setDisplayname($entity->getDisplayname().".00001");
+            }
 
-	    $entity->setEnable(true);
+            $entity->setEnable(true);
 
-	    $em->persist($entity);
-	    $em->flush();
+            $em->persist($entity);
+            $em->flush();
 
-	    $sensor = $em->createQueryBuilder()
-	        ->select('s')
-		->from('AppBundle:Sensor', 's')
-		->where('s.id like :id')
-		->setParameter('id', $entity->getId())
-		->getQuery()
-		->getArrayResult();
+            $sensor = $em->createQueryBuilder()
+                ->select('s')
+                ->from('AppBundle:Sensor', 's')
+                ->where('s.id like :id')
+                ->setParameter('id', $entity->getId())
+                ->getQuery()
+                ->getArrayResult();
 
-	    $response = new Response(json_encode($sensor[0]));
-	    $response->headers->set('Content-Type', 'application/json');
+            $response = new Response(json_encode($sensor[0]));
+            $response->headers->set('Content-Type', 'application/json');
 
-	    return $response;
-
+            return $response;
         }
 
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
@@ -173,6 +171,7 @@ class SensorRESTController extends VoryxController
             $form = $this->createForm(get_class(new SensorType()), $entity, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
+
             if ($form->isValid()) {
                 $em->flush();
 
