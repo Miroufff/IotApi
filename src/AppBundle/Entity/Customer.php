@@ -93,13 +93,6 @@ class Customer extends BaseUser
      */
     private $lastupdated;
 
-     /**
-      * @var Sensor
-      *
-      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Sensor", cascade={"persist"})
-      */
-    private $sensor;
-
     public function __construct()
     {
 	    parent::__construct();

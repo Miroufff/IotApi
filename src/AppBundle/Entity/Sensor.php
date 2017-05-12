@@ -66,6 +66,13 @@ class Sensor
     private $enable;
 
     /**
+      * @var Customer
+      *
+      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Customer", cascade={"persist"})
+      */
+    private $customer;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\DataSensor", mappedBy="sensor")
      */
     private $dataSensors;
