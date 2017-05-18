@@ -82,11 +82,6 @@ class Customer
 	    $this->enabled = true;
     }
 
-    public function __toString()
-    {
-        return $this->getUsername();
-    }
-
     /**
      * Get id
      *

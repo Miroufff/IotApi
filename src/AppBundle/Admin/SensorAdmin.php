@@ -30,11 +30,18 @@ class SensorAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('displayname')->add('customer');
+        $datagridMapper->add('displayname')->add('customer.username');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('displayname')->add('customer');
+        $listMapper
+            ->addIdentifier('displayname')
+            ->add('customer.username')
+            ->add('_action', 'actions', array('actions' => array(
+                'show' => array(),
+                'edit' => array(),
+            ))
+        );
     }
 }
