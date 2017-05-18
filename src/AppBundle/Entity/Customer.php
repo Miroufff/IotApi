@@ -144,29 +144,6 @@ class Customer
     }
 
     /**
-     * Set realm
-     *
-     * @param string $realm
-     * @return Customer
-     */
-    public function setRealm($realm)
-    {
-        $this->realm = $realm;
-
-        return $this;
-    }
-
-    /**
-     * Get realm
-     *
-     * @return string 
-     */
-    public function getRealm()
-    {
-        return $this->realm;
-    }
-
-    /**
      * Set username
      *
      * @param string $username
@@ -213,52 +190,6 @@ class Customer
     }
 
     /**
-     * Set credentials
-     *
-     * @param string $credentials
-     * @return Customer
-     */
-    public function setCredentials($credentials)
-    {
-        $this->credentials = $credentials;
-
-        return $this;
-    }
-
-    /**
-     * Get credentials
-     *
-     * @return string 
-     */
-    public function getCredentials()
-    {
-        return $this->credentials;
-    }
-
-    /**
-     * Set challenges
-     *
-     * @param string $challenges
-     * @return Customer
-     */
-    public function setChallenges($challenges)
-    {
-        $this->challenges = $challenges;
-
-        return $this;
-    }
-
-    /**
-     * Get challenges
-     *
-     * @return string 
-     */
-    public function getChallenges()
-    {
-        return $this->challenges;
-    }
-
-    /**
      * Set email
      *
      * @param string $email
@@ -279,75 +210,6 @@ class Customer
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * Set emailverified
-     *
-     * @param boolean $emailverified
-     * @return Customer
-     */
-    public function setEmailverified($emailverified)
-    {
-        $this->emailverified = $emailverified;
-
-        return $this;
-    }
-
-    /**
-     * Get emailverified
-     *
-     * @return boolean 
-     */
-    public function getEmailverified()
-    {
-        return $this->emailverified;
-    }
-
-    /**
-     * Set verificationtoken
-     *
-     * @param string $verificationtoken
-     * @return Customer
-     */
-    public function setVerificationtoken($verificationtoken)
-    {
-        $this->verificationtoken = $verificationtoken;
-
-        return $this;
-    }
-
-    /**
-     * Get verificationtoken
-     *
-     * @return string 
-     */
-    public function getVerificationtoken()
-    {
-        return $this->verificationtoken;
-    }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     * @return Customer
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string 
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**
