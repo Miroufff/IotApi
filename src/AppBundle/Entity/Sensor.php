@@ -3,8 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Rhumsaa\Uuid\Uuid;
 
 /**
  * Sensor
@@ -52,6 +51,7 @@ class Sensor
     private $product;
 
     /**
+
      * @var integer
      *
      * @ORM\Column(name="version", type="integer", nullable=false)
@@ -81,7 +81,8 @@ class Sensor
      * Constructor
      */ 
     public function __construct() {
-	$this->enable = true;
+        $this->uuid =  Uuid::uuid1();
+	    $this->enable = true;
     }
 
     /**
@@ -98,6 +99,7 @@ class Sensor
      * Set displayname
      *
      * @param string $displayname
+     *
      * @return Sensor
      */
     public function setDisplayname($displayname)
@@ -180,7 +182,7 @@ class Sensor
     /**
      * Get product
      *
-     * @return integer 
+     * @return integer
      */
     public function getProduct()
     {
@@ -231,5 +233,37 @@ class Sensor
     public function getEnable()
     {
         return $this->enable;
+    }
+
+    /**
+     * @return Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @param Customer $customer
+     */
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDataSensors()
+    {
+        return $this->dataSensors;
+    }
+
+    /**
+     * @param mixed $dataSensors
+     */
+    public function setDataSensors($dataSensors)
+    {
+        $this->dataSensors = $dataSensors;
     }
 }

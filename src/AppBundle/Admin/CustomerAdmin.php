@@ -13,28 +13,25 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class SensorAdmin extends Admin
+class CustomerAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
 	$formMapper
-		->add('displayname', 'text')
-		->add('vendor', 'text')
-		->add('product', 'text')
-		->add('version', 'text')
-		->add('enable', 'text')
-        ->add('customer', 'sonata_type_model_list', array(), array(
-            'placeholder' => 'No customer selected'
-        ));
+		->add('firstname', 'text')
+		->add('lastname', 'text')
+		->add('username', 'text')
+		->add('email', 'text')
+		->add('password', 'password');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('displayname')->add('customer');
+        $datagridMapper->add('username');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('displayname')->add('customer');
+        $listMapper->addIdentifier('username');
     }
 }

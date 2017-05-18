@@ -3,8 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
-use AppBundle\Entity\Sensor;
 
 /**
  * Customer
@@ -12,7 +10,7 @@ use AppBundle\Entity\Sensor;
  * @ORM\Table(name="customer")
  * @ORM\Entity
  */
-class Customer extends BaseUser
+class Customer
 {
     /**
      * @var integer
@@ -40,44 +38,28 @@ class Customer extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="realm", type="string", length=512, nullable=true)
+     * @ORM\Column(name="username", type="string", length=512)
      */
-    private $realm;
+    private $username;
+
+    /**->add('customer')
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=512)
+     */
+    private $password;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="credentials", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="email", type="string", length=512)
      */
-    private $credentials;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="challenges", type="text", length=65535, nullable=true)
-     */
-    private $challenges;
+    private $email;
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="emailVerified", type="boolean", nullable=true)
      */
-    private $emailverified;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="verificationToken", type="string", length=512, nullable=true)
-     */
-    private $verificationtoken;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="status", type="string", length=512, nullable=true)
-     */
-    private $status;
+    private $enabled;
 
     /**
      * @var \DateTime
@@ -95,7 +77,14 @@ class Customer extends BaseUser
 
     public function __construct()
     {
-	    parent::__construct();
+	    $this->created = new \DateTime();
+	    $this->lastupdated = new \DateTime();
+	    $this->enabled = true;
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
     }
 
     /**
@@ -408,25 +397,18 @@ class Customer extends BaseUser
     }
 
     /**
-     * Set Sensor
-     *
-     * @param Sensor $sensor
-     * @return Customer
+     * @return boolean
      */
-    public function setSensor($sensor)
+    public function isEnabled()
     {
-        $this->sensor = $sensor;
-
-        return $this;
+        return $this->enabled;
     }
 
     /**
-     * Get Sensor
-     *
-     * @return Sensor 
+     * @param boolean $enabled
      */
-    public function getSensor()
+    public function setEnabled($enabled)
     {
-        return $this->sensor;
+        $this->enabled = $enabled;
     }
 }

@@ -82,20 +82,20 @@ class DataSensorRESTController extends VoryxController
      */
     public function postAction(Request $request)
     {
-	$em = $this->getDoctrine()->getManager();
-	$sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("uuid" => $request->request->get('sensor', '')));
+        $em = $this->getDoctrine()->getManager();
+        $sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("uuid" => $request->request->get('sensor', '')));
 
-//TODO : check if the uuid received is ok
+        //TODO : check if the uuid received is ok
 
-	if ($sensor) {
-		$points = $this->get("influxdb_database")->writePoints([new Point(
-                	'temperature', // name of the measurement
-                	$request->request->get('value', 0),// the measurement value
-                	['sensor' => $sensor->getId()], // optional additional fields
-			[],
-			$request->request->get('receivedAt', exec('date +%s%N'))
-        	)]);
-	}
+        if ($sensor) {
+            $points = $this->get("influxdb_database")->writePoints([new Point(
+                        'temperature', // name of the measurement
+                        $request->request->get('value', 0),// the measurement value
+                        ['sensor' => $sensor->getId()], // optional additional fields
+                [],
+                $request->request->get('receivedAt', exec('date +%s%N'))
+                )]);
+        }
 
         return new JsonResponse($sensor);
     }    
