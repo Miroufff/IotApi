@@ -88,15 +88,16 @@ class DataSensorRESTController extends VoryxController
         //TODO : check if the uuid received is ok
 
         if ($sensor) {
-            $points = $this->get("influxdb_database")->writePoints([new Point(
-                        'temperature', // name of the measurement
-                        $request->request->get('value', 0),// the measurement value
-                        ['sensor' => $sensor->getId()], // optional additional fields
-                [],
+            $this->container->get('app.influx_service')->persist(
+                $request->request->get('measurement', ""),
+                $request->request->get('value', 0),
+                $sensor,
                 $request->request->get('receivedAt', exec('date +%s%N'))
-                )]);
-        }
+            );
 
-        return new JsonResponse($sensor);
+            return new JsonResponse("ok");
+        } else {
+            return new JsonResponse("nok");
+        }
     }    
 }

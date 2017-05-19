@@ -55,6 +55,16 @@ class SensorRESTController extends VoryxController
     /**
      * Get all Sensor entities.
      *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Gets all Sensor",
+     *   output = "AppBundle\Entity\SensorType",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
+     *
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param ParamFetcherInterface $paramFetcher
@@ -106,33 +116,11 @@ class SensorRESTController extends VoryxController
     {
         $entity = new Sensor();
 	    $form = $this->createForm('AppBundle\Form\SensorType', $entity);
-        $this->removeExtraFields($request, $form);
-	    $form->handleRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $entity = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $uuid = \Ramsey\Uuid\Uuid::uuid4();
-            $entity->setUuid($uuid->toString());
-
-            $name = $em->createQueryBuilder()
-                ->select('s')
-                ->from('AppBundle:Sensor', 's')
-                ->where('s.displayname like :displayname')
-                ->setParameter('displayname', $entity->getDisplayname().'%')
-                ->orderBy('s.id', 'DESC')
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
-
-            if ($name) {
-                $newName = $name->getDisplayname();
-                $entity->setDisplayname(++$newName);
-            } else {
-                $entity->setDisplayname($entity->getDisplayname().".00001");
-            }
-
-            $entity->setEnable(true);
-
             $em->persist($entity);
             $em->flush();
 

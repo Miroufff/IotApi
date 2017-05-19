@@ -46,7 +46,7 @@ class Sensor
     /**
      * @var string 
      *
-     * @ORM\Column(name="product", type="string", nullable=true)
+     * @ORM\Column(name="product", type="string", length=512, nullable=true)
      */
     private $product;
 
@@ -54,7 +54,7 @@ class Sensor
 
      * @var integer
      *
-     * @ORM\Column(name="version", type="integer", nullable=false)
+     * @ORM\Column(name="version", type="string", length=512, nullable=false)
      */
     private $version;
 
