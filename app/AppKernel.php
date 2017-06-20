@@ -27,7 +27,6 @@ class AppKernel extends Kernel
             new Algatux\InfluxDbBundle\InfluxDbBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
-            new Sonata\UserBundle\SonataUserBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
 	        new Sonata\AdminBundle\SonataAdminBundle(),
