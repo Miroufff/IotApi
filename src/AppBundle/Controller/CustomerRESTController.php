@@ -98,22 +98,31 @@ class CustomerRESTController extends VoryxController
      */
     public function postAction(Request $request)
     {
-        $entity = new Customer();
-        $form = $this->createForm(get_class(new CustomerType()), $entity, array("method" => $request->getMethod()));
+        $data = $request->request->all();
+        $userManager = $this->get('fos_user.user_manager');
+
+        /**
+         * Build customer
+         *
+         * @var Customer $user
+         */
+        $user = $userManager->createUser();
+        $user->setUsername($data['username']);
+        $user->setFirstname($data['firstname']);
+        $user->setLastname($data['lastname']);
+        $user->setEmail($data['email']);
+        $user->setPlainPassword($data['password']);
+        $user->setEnabled(true);
+
+        $form = $this->createForm(get_class(new CustomerType()), $user, array("method" => $request->getMethod()));
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
 
-        $encoder = $this->container->get('security.password_encoder');
-        $encoded = $encoder->encodePassword($user, $plainPassword);
-        $user->setPassword($encoded);
-
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $userManager->updateUser($user);
 
-            return new JsonResponse($request->request->get('all'));
+            return new JsonResponse();
         }
 
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
