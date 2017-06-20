@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Entity\User as BaseUser;
 
 /**
  * Customer
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="customer")
  * @ORM\Entity
  */
-class Customer
+class Customer extends BaseUser
 {
     /**
      * @var integer
@@ -36,32 +37,6 @@ class Customer
     private $lastname;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=512)
-     */
-    private $username;
-
-    /**->add('customer')
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=512)
-     */
-    private $password;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=512)
-     */
-    private $email;
-
-    /**
-     * @var boolean
-     */
-    private $enabled;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=true)
@@ -77,9 +52,9 @@ class Customer
 
     public function __construct()
     {
+        parent::__construct();
 	    $this->created = new \DateTime();
 	    $this->lastupdated = new \DateTime();
-	    $this->enabled = true;
     }
 
     /**

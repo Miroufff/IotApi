@@ -35,7 +35,6 @@ class DataSensorRESTController extends VoryxController
      * @param $idSensor
      *
      * @return Response
-     *
      */
     public function getAction($idSensor)
     {

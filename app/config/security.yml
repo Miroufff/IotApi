@@ -2,16 +2,26 @@
 # http://symfony.com/doc/current/book/security.html
 security:
 
+    encoders:
+            FOS\UserBundle\Model\UserInterface: sha512
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+        fos_userbundle:
+            id: fos_user.user_provider.username
 
     firewalls:
+        oauth_token:                                   # Everyone can access the access token URL.
+            pattern: ^/oauth/v2/token
+            security: false
+        api:
+            pattern: ^/                                # All URLs are protected
+            anonymous: true                           # Anonymous access is not allowed
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
         main:
-            anonymous: ~
+            pattern: ^/
+            # other settings
+            anonymous:    true

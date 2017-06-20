@@ -13,7 +13,12 @@ class CustomerType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstname')->add('lastname')->add('realm')->add('username')->add('password')->add('credentials')->add('challenges')->add('email')->add('emailverified')->add('verificationtoken')->add('status')->add('created')->add('lastupdated')->add('idSensor')        ;
+        $builder
+            ->add('firstname')
+            ->add('lastname')
+            ->add('username')
+            ->add('password')
+            ->add('email');
     }
     
     /**
