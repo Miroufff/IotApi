@@ -136,7 +136,12 @@ class CustomerRESTController extends VoryxController
 
                 return new JsonResponse();
             } catch (Exception $e) {
-                return new JsonResponse($e->getMessage());
+                return new JsonResponse(
+                    array(
+                        'status'  => 'errorException',
+                        'message' => $e->getMessage()
+                    )
+                );
             }
         }
 
