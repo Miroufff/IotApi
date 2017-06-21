@@ -14,6 +14,7 @@ use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +44,17 @@ class CustomerRESTController extends VoryxController
     /**
      * Get all Customer entities.
      *
+     * REST action which returns type by id.
+     * Method: POST, url: /api/customers
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Retrieve customers data",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param ParamFetcherInterface $paramFetcher
@@ -78,7 +90,7 @@ class CustomerRESTController extends VoryxController
      * Create a Customer entity.
      *
      * REST action which returns type by id.
-     * Method: POST, url: /api/customer/{request}.{_format}
+     * Method: POST, url: /api/customers/{request}.{_format}
      *
      * @ApiDoc(
      *   resource = true,
@@ -118,11 +130,14 @@ class CustomerRESTController extends VoryxController
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
 
-
         if ($form->isValid()) {
-            $userManager->updateUser($user);
+            try {
+                $userManager->updateUser($user);
 
-            return new JsonResponse();
+                return new JsonResponse();
+            } catch (Exception $e) {
+                return new JsonResponse($e->getMessage());
+            }
         }
 
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);

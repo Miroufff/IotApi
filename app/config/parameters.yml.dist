@@ -10,7 +10,9 @@ parameters:
     influxdb_host:     127.0.0.1
     influxdb_port:     8086
     influxdb_db:       influx_db
-    
+    influxdb_username: root
+    influxdb_password: ~
+
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
 
