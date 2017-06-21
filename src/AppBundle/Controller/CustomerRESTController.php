@@ -126,19 +126,28 @@ class CustomerRESTController extends VoryxController
         $user->setPlainPassword($data['password']);
         $user->setEnabled(true);
 
-        $form = $this->createForm(get_class(new CustomerType()), $user, array("method" => $request->getMethod()));
+        $form = $this->createForm(CustomerType::class, $user, array("method" => $request->getMethod()));
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->beginTransaction();
+
             try {
                 $userManager->updateUser($user);
+                $em->getConnection()->commit();
 
                 return new JsonResponse();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
+                $em->getConnection()->rollback();
+
+                if ($e->getErrorCode()) {
+
+                }
                 return new JsonResponse(
                     array(
-                        'status'  => 'errorException',
+                        'status'  => $e->getErrorCode(),
                         'message' => $e->getMessage()
                     )
                 );
