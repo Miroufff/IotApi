@@ -140,7 +140,7 @@ class CustomerRESTController extends VoryxController
                 return new JsonResponse();
             } catch (\Exception $e) {
                 if ($e->getErrorCode() == 1062) {
-                    return new JsonResponse("Duplicate entry.");
+                    return new JsonResponse("Duplicate entry.", 400);
                 }
 
                 return new JsonResponse(
