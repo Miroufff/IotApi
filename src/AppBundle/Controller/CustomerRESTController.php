@@ -89,7 +89,7 @@ class CustomerRESTController extends VoryxController
     /**
      * Create a Customer entity.
      *
-     * REST action which returns type by id.
+     * REST action which returns list of custumers.
      * Method: POST, url: /api/customers/{request}.{_format}
      *
      * @ApiDoc(
@@ -158,30 +158,54 @@ class CustomerRESTController extends VoryxController
     /**
      * Update a Customer entity.
      *
+     * REST action which update a user.
+     * Method: POST, url: /api/customers/{request}.{_format}
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Update a customer data",
+     *   output = "AppBundle\Entity\CustomerType",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
+     *
      * @View(serializerEnableMaxDepthChecks=true)
      *
-     * @param Request $request
-     * @param $entity
+     * @param Request  $request
+     * @param Customer $customer
      *
      * @return Response
      */
-    public function putAction(Request $request, Customer $entity)
+    public function putAction(Request $request, Customer $customer)
     {
+        $data = $request->request->all();
+        $userManager = $this->get('fos_user.user_manager');
+
+        $customer->setUsername($data['username']);
+        $customer->setFirstname($data['firstname']);
+        $customer->setLastname($data['lastname']);
+        $customer->setEmail($data['email']);
+        $customer->setPlainPassword($data['password']);
+
         try {
             $em = $this->getDoctrine()->getManager();
-            $request->setMethod('PATCH'); //Treat all PUTs as PATCH
-            $form = $this->createForm(CustomerType::class, $entity, array("method" => $request->getMethod()));
-            $this->removeExtraFields($request, $form);
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $em->flush();
+            $userManager->updateUser($customer, false);
+            $em->flush();
 
-                return $entity;
+            return new JsonResponse(array("code" => 200));
+        } catch (\Exception $e) {
+            if ($e->getErrorCode() == 1062) {
+                return new JsonResponse(array("code" => 1062, "message" => "Duplicate entry."));
             }
 
-            return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
-        } catch (\Exception $e) {
-            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(
+                array(
+                    'status'  => $e->getErrorCode(),
+                    'message' => $e->getMessage()
+                )
+            );
         }
     }
 
