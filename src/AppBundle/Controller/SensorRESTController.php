@@ -156,7 +156,7 @@ class SensorRESTController extends VoryxController
         try {
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
-            $form = $this->createForm(get_class(new SensorType()), $entity, array("method" => $request->getMethod()));
+            $form = $this->createForm(SensorType::class, $entity, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
 

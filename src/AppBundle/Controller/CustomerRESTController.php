@@ -170,7 +170,7 @@ class CustomerRESTController extends VoryxController
         try {
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
-            $form = $this->createForm(get_class(new CustomerType()), $entity, array("method" => $request->getMethod()));
+            $form = $this->createForm(CustomerType::class, $entity, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
             if ($form->isValid()) {
