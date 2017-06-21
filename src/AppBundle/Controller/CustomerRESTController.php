@@ -132,19 +132,17 @@ class CustomerRESTController extends VoryxController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->beginTransaction();
 
             try {
-                $userManager->updateUser($user);
-                $em->getConnection()->commit();
+                $userManager->updateUser($user, false);
+                $em->flush();
 
                 return new JsonResponse();
             } catch (\Exception $e) {
-                $em->getConnection()->rollback();
-
-                if ($e->getErrorCode()) {
-
+                if ($e->getErrorCode() == 1062) {
+                    return new JsonResponse("Duplicate entry.");
                 }
+
                 return new JsonResponse(
                     array(
                         'status'  => $e->getErrorCode(),
