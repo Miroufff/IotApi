@@ -108,7 +108,7 @@ class CustomerRESTController extends VoryxController
      *
      * @return Response
      */
-    public function postAction(Request $request, Customer $customer)
+    public function postAction(Request $request, Customer $customer = null)
     {
         $data = $request->request->all();
         $userManager = $this->get('fos_user.user_manager');
