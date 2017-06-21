@@ -137,10 +137,10 @@ class CustomerRESTController extends VoryxController
                 $userManager->updateUser($user, false);
                 $em->flush();
 
-                return new JsonResponse();
+                return new JsonResponse(array("code" => 200));
             } catch (\Exception $e) {
                 if ($e->getErrorCode() == 1062) {
-                    return new JsonResponse("Duplicate entry.", 400);
+                    return new JsonResponse(array("code" => 1062, "message" => "Duplicate entry."));
                 }
 
                 return new JsonResponse(
