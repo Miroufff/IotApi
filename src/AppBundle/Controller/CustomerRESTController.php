@@ -121,7 +121,9 @@ class CustomerRESTController extends VoryxController
         $customer->setFirstname($data['firstname']);
         $customer->setLastname($data['lastname']);
         $customer->setEmail($data['email']);
-        $customer->setPlainPassword($data['password']);
+        if ($data['password'] != "") {
+            $customer->setPlainPassword($data['password']);
+        }
         $customer->setEnabled(true);
 
         $form = $this->createForm(CustomerType::class, $customer, array("method" => $request->getMethod()));
