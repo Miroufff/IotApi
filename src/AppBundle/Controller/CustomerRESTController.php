@@ -108,34 +108,29 @@ class CustomerRESTController extends VoryxController
      *
      * @return Response
      */
-    public function postAction(Request $request)
+    public function postAction(Request $request, Customer $customer)
     {
         $data = $request->request->all();
         $userManager = $this->get('fos_user.user_manager');
 
-        /**
-         * Build customer
-         *
-         * @var Customer $user
-         */
-        $user = $userManager->createUser();
-        $user->setUsername($data['username']);
-        $user->setFirstname($data['firstname']);
-        $user->setLastname($data['lastname']);
-        $user->setEmail($data['email']);
-        $user->setPlainPassword($data['password']);
-        $user->setEnabled(true);
+        if ($customer == null) {
+            $customer = $userManager->createUser();
+        }
 
-        $form = $this->createForm(CustomerType::class, $user, array("method" => $request->getMethod()));
+        $customer->setUsername($data['username']);
+        $customer->setFirstname($data['firstname']);
+        $customer->setLastname($data['lastname']);
+        $customer->setEmail($data['email']);
+        $customer->setPlainPassword($data['password']);
+        $customer->setEnabled(true);
+
+        $form = $this->createForm(CustomerType::class, $customer, array("method" => $request->getMethod()));
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
             try {
-                $userManager->updateUser($user, false);
-                $em->flush();
+                $userManager->updateUser($customer, true);
 
                 return new JsonResponse(array("code" => 200));
             } catch (\Exception $e) {
@@ -181,32 +176,17 @@ class CustomerRESTController extends VoryxController
     public function putAction(Request $request, Customer $customer)
     {
         $data = $request->request->all();
-        $userManager = $this->get('fos_user.user_manager');
-
-        $customer->setUsername($data['username']);
-        $customer->setFirstname($data['firstname']);
-        $customer->setLastname($data['lastname']);
-        $customer->setEmail($data['email']);
         $customer->setPlainPassword($data['password']);
 
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $userManager->updateUser($customer, false);
-            $em->flush();
+        $form = $this->container->get('fos_user.change_password.form');
+        $formHandler = $this->container->get('fos_user.change_password.form.handler');
+        $process = $formHandler->process($customer);
 
-            return new JsonResponse(array("code" => 200));
-        } catch (\Exception $e) {
-            if ($e->getErrorCode() == 1062) {
-                return new JsonResponse(array("code" => 1062, "message" => "Duplicate entry."));
-            }
-
-            return new JsonResponse(
-                array(
-                    'status'  => $e->getErrorCode(),
-                    'message' => $e->getMessage()
-                )
-            );
+        if ($process) {
+            return new JsonResponse();
         }
+
+        return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
