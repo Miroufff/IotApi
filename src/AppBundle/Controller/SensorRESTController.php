@@ -86,6 +86,7 @@ class SensorRESTController extends VoryxController
 
             $em = $this->getDoctrine()->getManager();
             $entities = $em->getRepository('AppBundle:Sensor')->findBy($filters, $order_by, $limit, $offset);
+
             if ($entities) {
                 return $entities;
             }
@@ -190,6 +191,10 @@ class SensorRESTController extends VoryxController
     /**
      * Delete a Sensor entity.
      *
+     * @ApiDoc(
+     *  description="Delete a Sensor entity",
+     * )
+     *
      * @View(statusCode=204)
      *
      * @param Request $request
@@ -204,7 +209,7 @@ class SensorRESTController extends VoryxController
             $em->remove($entity);
             $em->flush();
 
-            return null;
+            return new JsonResponse();
         } catch (\Exception $e) {
             return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
         }

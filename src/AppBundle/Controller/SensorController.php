@@ -27,6 +27,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class SensorController extends Controller
 {
     /**
+     * @ApiDoc(
+     *  description="Update the status of a sensor",
+     *  input="AppBundle\Form\SensorType",
+     *  output="AppBundle\Entity\Sensor"
+     * )
+     *
      * @param Request $request
      * @param Sensor $sensor
      *
