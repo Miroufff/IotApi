@@ -4,7 +4,7 @@ app:
 
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc
+    prefix:   /doc
 
 admin_area:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
@@ -23,6 +23,12 @@ app_data_sensor_api:
     resource: "@AppBundle/Controller/DataSensorRESTController.php"
     type:   rest
     prefix:   /api
+
+app_sensor_update_status:
+    path: /api/sensors/updateStatus/{id}
+    defaults: { _controller: "AppBundle:Sensor:updateStatus" }
+    options:
+        expose: true
 
 #REST
 rest :
