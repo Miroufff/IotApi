@@ -79,7 +79,7 @@ class Sensor
 
     /**
      * Constructor
-     */ 
+     */
     public function __construct() {
         $this->uuid =  Uuid::uuid1();
 	    $this->enable = true;
