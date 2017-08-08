@@ -88,7 +88,7 @@ class DataSensorRESTController extends VoryxController
             $this->container->get('app.influx_service')->persist(
                 $request->request->get('type', ""),
                 $request->request->get('value', 0),
-                $sensor,
+                ['sensor' => $sensor->getId()],
                 $request->request->get('receivedAt', exec('date +%s%N'))
             );
 
