@@ -2,6 +2,7 @@
 
 namespace AppBundle\Services;
 
+use AppBundle\Entity\Sensor;
 use InfluxDB\Database;
 use InfluxDB\Point;
 
@@ -34,7 +35,7 @@ class InfluxService
      * @param $sensor
      * @param $receivedAt
      */
-    public function persist($measurement, $value, $sensor, $receivedAt)
+    public function persist($measurement, $value, Sensor $sensor, $receivedAt)
     {
         $this->influxManager->writePoints(
             [new Point(
