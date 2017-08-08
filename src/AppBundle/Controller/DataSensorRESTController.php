@@ -84,12 +84,10 @@ class DataSensorRESTController extends VoryxController
         $em = $this->getDoctrine()->getManager();
         $sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("uuid" => $request->request->get('sensor', '')));
 
-        //TODO : check if the uuid received is ok
-
         if ($sensor) {
             $this->container->get('app.influx_service')->persist(
-                $request->request->get('measurement', $request->request->get('type')),
-                $request->request->get('value', $request->request->get('value')),
+                $request->request->get('type', ""),
+                $request->request->get('value', 0),
                 $sensor,
                 $request->request->get('receivedAt', exec('date +%s%N'))
             );
