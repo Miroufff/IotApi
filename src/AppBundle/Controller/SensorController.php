@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Customer;
 use AppBundle\Entity\Sensor;
 use AppBundle\Form\SensorType;
 use Symfony\Component\Serializer\Serializer;
@@ -41,6 +42,34 @@ class SensorController extends Controller
     public function updateStatusAction(Request $request, Sensor $sensor) {
         $sensor->setEnable(!$sensor->getEnable());
         $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse();
+    }
+
+    /**
+     * @ApiDoc(
+     *  description="Update the customer of a sensor",
+     *  input="AppBundle\Form\SensorType",
+     *  output="AppBundle\Entity\Sensor"
+     * )
+     *
+     * @param Request $request
+     * @param Customer $customer
+     *
+     * @return JsonResponse
+     */
+    public function updateCustomerAction(Request $request, Customer $customer) {
+        $em = $this->getDoctrine()->getManager();
+        $sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("uuid" => $request->request->get('sensor', '')));
+
+        if ($sensor) {
+            $sensor->setCustomer($customer);
+            $em->flush();
+
+            return new JsonResponse("ok");
+        } else {
+            return new JsonResponse("nok");
+        }
 
         return new JsonResponse();
     }

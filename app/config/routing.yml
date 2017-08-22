@@ -31,6 +31,13 @@ app_sensor_update_status:
     options:
         expose: true
 
+app_sensor_update_customer:
+    methods:  GET
+    path: /api/sensors/updateCustomer/{id}
+    defaults: { _controller: "AppBundle:Sensor:updateCustomer" }
+    options:
+        expose: true
+
 #REST
 rest :
     type : rest
