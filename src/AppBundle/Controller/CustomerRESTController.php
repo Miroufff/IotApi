@@ -57,7 +57,7 @@ class CustomerRESTController extends VoryxController
      * )
      * @View(serializerEnableMaxDepthChecks=true)
      *
-     * @param ParamFetcherInterface $paramFetcher
+     * @param ParamFetcherInterface $paramFetcherall
      *
      * @return Response
      *
