@@ -38,12 +38,12 @@ class DataSensorRESTController extends VoryxController
      */
     public function getAction($idSensor)
     {
-        return $this->get("influxdb_database")->getQueryBuilder()
+        return $this->container->get('app.influx_service')->getQueryBuilder()
         ->select('*')
         ->from('temperature')
         ->where(["sensor = '".$idSensor."'"])
         ->getResultSet()
-        ->getPoints();;
+        ->getPoints();
     }
     
     /**
