@@ -63,6 +63,7 @@ class SensorController extends Controller
         $sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("uuid" => $request->request->get('sensor', '')));
 
         if ($sensor) {
+            $sensor->setDisplayName($request->request->get('displayName', ''));
             $sensor->setCustomer($customer);
             $em->flush();
 
