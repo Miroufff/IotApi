@@ -54,20 +54,24 @@ class SensorController extends Controller
      * )
      *
      * @param Request $request
-     * @param Customer $customer
      *
      * @return JsonResponse
      */
-    public function updateCustomerAction(Request $request, Customer $customer) {
+    public function updateCustomerAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $sensor = $em->getRepository('AppBundle:Sensor')->findOneBy(array("uuid" => $request->request->get('sensor', '')));
+        $customer = $em->getRepository('AppBundle:Customer')->findOneBy(array("username" => $request->request->get('customer', '')));
 
-        if ($sensor) {
-            $sensor->setDisplayName($request->request->get('displayName', ''));
-            $sensor->setCustomer($customer);
-            $em->flush();
+        if ($customer) {
+            if ($sensor) {
+                $sensor->setDisplayName($request->request->get('displayName', ''));
+                $sensor->setCustomer($customer);
+                $em->flush();
 
-            return new JsonResponse("ok");
+                return new JsonResponse("ok");
+            } else {
+                return new JsonResponse("nok");
+            }
         } else {
             return new JsonResponse("nok");
         }
