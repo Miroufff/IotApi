@@ -49,7 +49,6 @@ class SensorController extends Controller
     /**
      * @ApiDoc(
      *  description="Update the customer of a sensor",
-     *  input="AppBundle\Form\SensorType",
      *  output="AppBundle\Entity\Sensor"
      * )
      *
