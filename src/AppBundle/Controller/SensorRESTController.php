@@ -206,7 +206,7 @@ class SensorRESTController extends VoryxController
     {
         try {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($entity);
+            $entity->setCustomer(null);
             $em->flush();
 
             return new JsonResponse();

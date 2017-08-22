@@ -40,7 +40,7 @@ class InfluxService
         $this->influxManager->writePoints(
             [new Point(
                 $measurement, // name of the measurement
-                $value,// the measurement value
+                floatval($value),// the measurement value
             ['sensor' => $sensor->getId()], // optional additional fields
             [],
             $receivedAt
