@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\DataSensor;
 use AppBundle\Form\DataSensorType;
+use Doctrine\Common\Collections\ArrayCollection;
 use InfluxDB\Point;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -59,14 +60,14 @@ class DataSensorRESTController extends VoryxController
 
             $humidity = $this->container->get('influxdb_database')->getQueryBuilder()
                 ->select('last(value)')
-                ->from('temperature')
+                ->from('humidity')
                 ->where(["sensor = '".$idSensor."'"])
                 ->getResultSet()
                 ->getPoints()[0];
 
             $dust = $this->container->get('influxdb_database')->getQueryBuilder()
                 ->select('last(value)')
-                ->from('temperature')
+                ->from('dust')
                 ->where(["sensor = '".$idSensor."'"])
                 ->getResultSet()
                 ->getPoints()[0];
@@ -98,7 +99,7 @@ class DataSensorRESTController extends VoryxController
      */
     public function cgetAction()
     {
-        return $this->get("influxdb_database")->query('select * from test_metric LIMIT 5')->getPoints();;
+        return $this->get("influxdb_database")->query('select * from test_metric LIMIT 5')->getPoints();
     }
 
     /**
