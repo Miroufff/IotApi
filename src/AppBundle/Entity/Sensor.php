@@ -25,7 +25,7 @@ class Sensor
     /**
      * @var string
      *
-     * @ORM\Column(name="displayName", type="string", length=2048)
+     * @ORM\Column(name="displayName", type="string", length=2048, nullable=true)
      */
     private $displayname;
   
