@@ -28,9 +28,20 @@ use DateTime;
 class DataSensorRESTController extends VoryxController
 {
     /**
-     * Get a DataSensor entity
+     * REST action which returns type by id.
+     * Method: GET, url: /api/datasensor/{idSensor}.{_format}
      *
-     * @View(serializerEnableMaxDepthChecks=true)
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Get a sensor data",
+     *   output = "AppBundle\Entity\DataSensorType",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the page is not found"
+     *   }
+     * )
+     *
+     * @View(statusCode=201, serializerEnableMaxDepthChecks=true)
      *
      * @param $idSensor
      *
