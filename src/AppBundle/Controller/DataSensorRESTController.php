@@ -38,12 +38,40 @@ class DataSensorRESTController extends VoryxController
      */
     public function getAction($idSensor)
     {
-        return $this->container->get('app.influx_service')->getQueryBuilder()
-        ->select('*')
-        ->from('temperature')
-        ->where(["sensor = '".$idSensor."'"])
-        ->getResultSet()
-        ->getPoints();
+        $temperature = $this->container->get('influxdb_database')->getQueryBuilder()
+            ->select('last(value)')
+            ->from('temperature')
+            ->where(["sensor = '".$idSensor."'"])
+            ->getResultSet()
+            ->getPoints()[0];
+
+        $humidity = $this->container->get('influxdb_database')->getQueryBuilder()
+            ->select('last(value)')
+            ->from('temperature')
+            ->where(["sensor = '".$idSensor."'"])
+            ->getResultSet()
+            ->getPoints()[0];
+
+        $dust = $this->container->get('influxdb_database')->getQueryBuilder()
+            ->select('last(value)')
+            ->from('temperature')
+            ->where(["sensor = '".$idSensor."'"])
+            ->getResultSet()
+            ->getPoints()[0];
+
+        $airquality = $this->container->get('influxdb_database')->getQueryBuilder()
+            ->select('last(value)')
+            ->from('airquality')
+            ->where(["sensor = '".$idSensor."'"])
+            ->getResultSet()
+            ->getPoints()[0];
+
+        return new JsonResponse(array(
+            "temperature" => $temperature,
+            "humidity"    => $humidity,
+            "dust"        => $dust,
+            "airquality"  => $airquality
+        ));
     }
     
     /**
